@@ -2,7 +2,11 @@ const apiKey = "d015391bbfb17bdf52dd9e7b45dbfea7"; // Replace with your OpenWeat
 
 document.getElementById("getWeather").addEventListener("click", () => {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(getWeather, showError);
+        navigator.geolocation.getCurrentPosition(
+            getWeather, 
+            showError, 
+            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+        );
     } else {
         alert("Geolocation is not supported by your browser.");
     }
@@ -11,6 +15,8 @@ document.getElementById("getWeather").addEventListener("click", () => {
 function getWeather(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
+
+    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`); // Debugging
 
     const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`;
 
